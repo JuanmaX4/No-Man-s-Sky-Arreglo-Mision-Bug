@@ -55,7 +55,7 @@ mf_save.hg → Modo multijugador (manual)
 
 mf_save2.hg → Modo multijugador (automático)
 
-![alt text](image.png)
+![Vista del menú de guardado](img/guardado.png)
 
 📁 Recomendado: copia y pégalos en el Escritorio.
 
@@ -64,37 +64,83 @@ mf_save2.hg → Modo multijugador (automático)
 ### 3️⃣ Abrir el editor y cargar tu partida
 
 1. Abre `NMSSaveEditor.jar`
+![Paso 1: Abrir el editor](img/NMSaveEditor1.png)
 2. Ve a `File > Open File/Path`
-3. Selecciona `save.hg` o `save2.hg` (el más reciente)
+3. Selecciona `save.hg` o `save2.hg` (el más reciente) ``Probablemente el más reciente sea save2.hg``
+![Paso 2: Seleccionar partida](img/NMSaveEditor2.png)
 4. Ve a `Edit > Edit Raw JSON`
-
-📸 *Imagen ejemplo:*
-![Abrir archivo](ruta_imagen_open.png)
 
 ---
 
 ### 4️⃣ Buscar la misión bugueada
 
+BaseContext --> PlayerStateData 
 Una vez en el editor JSON:
 
 - Presiona `Ctrl + F`
 - Escribe: `PURPM1`, `PURPM2`, `PURPM3` o `PURPM_BOAT`
 
-Estas misiones son las distintas etapas de "En multitudes estelares".
+Estas misiones son las distintas etapas de "En multitudes estelares". Yo recomiendo cambiar mejor `PURPM1`
 
 📸 *Imagen búsqueda:*
-![Buscar PURPM1](ruta_imagen_buscar.png)
+![Paso 2: Seleccionar partida](img/NMSaveEditor4.png)
 
 ---
 
 ### 5️⃣ Solucionar el bug
 
-#### Opción A: Marcar misión como completada
+#### 🅰️ Opción A: Marcar misión como completada
 
-Modifica:
+Busca el bloque correspondiente a la misión bugueada (ej: `^PURPM1`, `^PURPM2`, etc.). Este bloque se verá más o menos así:
 
 ```json
+{
+  "Mission": "^PURPM1",
+  "Progress": 27,
+  "Seed": 0,
+  "Data": 0,
+  "Stat": 0,
+  "Participants": [
+    {
+      "UA": 0,
+      "BuildingSeed": [true, "0x0"],
+      "BuildingLocation": [0.0, 0.0, 0.0],
+      "ParticipantType": {
+        "ParticipantType": "None"
+      }
+    },
+    ...
+  ]
+}
+
+🔧 Modifica solo el valor de Progress:
+
+json
+Copy code
 "Progress": 255
+```
+
+Esto forzará al juego a considerar la misión como completada.
+
+🅱️ Opción B: Eliminar la misión por completo
+Si prefieres que el juego reinicie la misión de forma limpia:
+
+Selecciona y elimina todo el bloque correspondiente a la misión ({...} completo).
+
+Asegúrate de no dejar comas colgantes si es el último bloque en la lista.
+
+Revisa que el archivo JSON siga siendo válido.
+
+💡 Tip si aún no se actualiza
+Si el juego no actualiza inmediatamente el estado de la misión tras editar el archivo, puedes intentar lo siguiente:
+
+✅ Quédate dentro de la Anomalía Espacial unos segundos tras cargar la partida.
+
+🚀 Si no ves cambios, viaja a otro sistema estelar usando el mapa galáctico.
+
+🔌 Como último recurso, desactiva el modo multijugador temporalmente o desconecta el internet al iniciar el juego (esto forzará una carga más "limpia").
+
+⚠️ Asegúrate siempre de guardar los cambios en el editor (Ctrl + S) antes de cerrar.
 
 
-
+### Espero que te haya servido de ayuda buen viaje viajero.
